@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עדכון בחירת קבלן - מרפסות</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            padding: 20px;
+            min-height: 100vh;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            border-bottom: 4px solid #d4a574;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .header .subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* Content Sections */
+        .content {
+            padding: 0;
+        }
+
+        .section {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a472a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #d4a574;
+            border-radius: 2px;
+        }
+
+        /* Contractors List */
+        .contractors {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .contractor-item {
+            background: #f9f9f9;
+            padding: 14px;
+            border-radius: 8px;
+            border-right: 3px solid #d4a574;
+            font-size: 15px;
+        }
+
+        /* Decision Box */
+        .decision-box {
+            background: linear-gradient(135deg, #d4a574 0%, #c99660 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.2);
+        }
+
+        .decision-box .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .decision-box .name {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .decision-box .reason {
+            font-size: 13px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        /* Cost Box */
+        .cost-container {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+            font-size: 15px;
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+            padding-top: 16px;
+            border-top: 2px solid #d4a574;
+            font-weight: 700;
+            font-size: 16px;
+            color: #1a472a;
+        }
+
+        .cost-item .label {
+            flex: 1;
+        }
+
+        .cost-item .price {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* Payment Terms */
+        .payment-terms {
+            background: #f0f8f4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .payment-terms .term {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(26, 71, 42, 0.1);
+        }
+
+        .payment-terms .term:last-child {
+            border-bottom: none;
+        }
+
+        .payment-terms .percentage {
+            background: #1a472a;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 13px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        /* Highlights */
+        .highlights {
+            display: grid;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .highlight-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .highlight-item::before {
+            content: '✓';
+            color: #1a472a;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Warning Section */
+        .warning-section {
+            background: linear-gradient(135deg, #c1272d 0%, #a01e24 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin: 30px;
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(193, 39, 45, 0.2);
+        }
+
+        .warning-section h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .warning-section p {
+            font-size: 14px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        /* Next Steps */
+        .next-steps {
+            background: #f0f8f4;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .next-steps .step {
+            padding: 12px 0;
+            padding-right: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            border-bottom: 1px solid rgba(26, 71, 42, 0.1);
+        }
+
+        .next-steps .step:last-child {
+            border-bottom: none;
+        }
+
+        .next-steps .step::before {
+            content: '→';
+            color: #1a472a;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .decision-box {
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .warning-section {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 6px 20px rgba(193, 39, 45, 0.2);
+            }
+            50% {
+                box-shadow: 0 6px 30px rgba(193, 39, 45, 0.35);
+            }
+        }
+
+        /* Print Styling */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            .section {
+                padding: 20px;
+            }
+            .header {
+                padding: 30px 20px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('marpreset-form');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const choice = document.querySelector('input[name="choice"]:checked').value;
+                const fullname = document.querySelector('input[name="fullname"]').value;
+                const phone = document.querySelector('input[name="phone"]').value;
+                const timestamp = new Date().toLocaleString('he-IL');
+
+                // שלח ל-Formspree כ-JSON
+                fetch('https://formspree.io/f/xjkqvqrd', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        'בחירה': choice,
+                        'שם מלא': fullname,
+                        'מספר טלפון': phone,
+                        'תאריך וזמן': timestamp
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        successMessage.style.display = 'block';
+                        errorMessage.style.display = 'none';
+                        form.reset();
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                        }, 5000);
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🏗️ עדכון בחירת קבלן</h1>
+            <div class="subtitle">פרויקט מרפסות - הרחבה ושיפור</div>
+            <div class="date-badge">15 במאי 2026</div>
+        </div>
+
+        <div class="content">
+            <!-- Contractors Section -->
+            <div class="section">
+                <div class="section-title">הקבלנים שנבחנו</div>
+                <div class="contractors">
+                    <div class="contractor-item">✓ מר מנסור חכים</div>
+                    <div class="contractor-item">✓ מר ניזאר עוקל</div>
+                    <div class="contractor-item">✓ מר ג'ואד ח'טיב</div>
+                </div>
+            </div>
+
+            <!-- Participants Section -->
+            <div class="section">
+                <div class="section-title">נוכחים בפגישה</div>
+                <div class="contractors">
+                    <div class="contractor-item">✓ מר ענאן סאדר (נציג דיירים)</div>
+                    <div class="contractor-item">✓ מר פאדי בחוס (נציג דיירים)</div>
+                    <div class="contractor-item">✓ מר סוהיל דלאל (נציג דיירים)</div>
+                    <div class="contractor-item">✓ מר עאמר סגראוי (נציג דיירים)</div>
+                    <div class="contractor-item">✓ מר ענאן אבו רחמון (נציג דיירים)</div>
+                    <div class="contractor-item">✓ מר אליאס חגאר (מפקח בניה)</div>
+                </div>
+            </div>
+
+            <!-- Decision Section -->
+            <div class="section">
+                <div class="section-title">ההחלטה</div>
+                <div class="decision-box" style="background: linear-gradient(135deg, #7cb342 0%, #9ccc65 100%);">
+                    <div class="label">קבלן מבצע שנבחר</div>
+                    <div class="name">ניזאר עוקל</div>
+                    <div class="reason" style="margin-bottom: 16px; font-weight: 600; font-size: 14px;">
+                        🗳️ הצבעה פה אחד ללא מתנגדים
+                    </div>
+                    <div style="font-size: 13px; background: rgba(255,255,255,0.2); padding: 14px; border-radius: 6px; line-height: 1.7; border-right: 3px solid rgba(255,255,255,0.5);">
+                        <strong>הסיבות:</strong> על בסיס מקצועיות רבה, ניסיון עשיר בתחום, והצעה עם יתרונות מובהקים שעלו בהשוואה לשני הקבלנים הנוספים.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cost Section -->
+            <div class="section">
+                <div class="section-title">עלות לדייר</div>
+                <div class="cost-container">
+                    <div class="cost-item">
+                        <span class="label">התקנת מרפסת (ללא חזית אלומיניום)</span>
+                        <span class="price">107,000 ₪</span>
+                    </div>
+                    <div class="cost-item">
+                        <span class="label">חזית אלומיניום (פרופיל, זכוכית, תריסים)</span>
+                        <span class="price">19,000 ₪</span>
+                    </div>
+                    <div class="cost-item">
+                        <span class="label">סך הכל (לחזית 6 מטר)</span>
+                        <span class="price" style="color: #c1272d; font-size: 18px;">126,000 ₪</span>
+                    </div>
+                </div>
+                <p style="font-size: 12px; color: #666; margin-top: 12px; line-height: 1.5;">
+                    * הפחתה תחול לחזית קטנה מ-6 מטר או בהיעדר עבודות אלומיניום
+                </p>
+            </div>
+
+            <!-- Payment Terms -->
+            <div class="section">
+                <div class="section-title">תנאי התשלום המובטחים</div>
+                <div class="payment-terms">
+                    <div class="term">
+                        <span>מקדמה</span>
+                        <span class="percentage">10%</span>
+                    </div>
+                    <div class="term">
+                        <span>אישור חומר במפעל</span>
+                        <span class="percentage">20%</span>
+                    </div>
+                    <div class="term">
+                        <span>התקנת המרפסת (ברזל)</span>
+                        <span class="percentage">30%</span>
+                    </div>
+                    <div class="term">
+                        <span>התקנת מעקה הזכוכית</span>
+                        <span class="percentage">20%</span>
+                    </div>
+                    <div class="term">
+                        <span>סיום ואישור מפקח</span>
+                        <span class="percentage">20%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Advantages -->
+            <div class="section">
+                <div class="section-title">העבודה כוללת:</div>
+                <div class="highlights">
+                    <div class="highlight-item"><strong>ליווי צוות מקצוע:</strong> אדריכלית, מהנדס קונסטרוקטור, מפקח בניה</div>
+                    <div class="highlight-item"><strong>התקנת מרפסת לדוגמא:</strong> לאישור הצוות המקצועי</div>
+                    <div class="highlight-item"><strong>פוליסות ביטוח:</strong> ביטוח עבודות קבלניות וכיסוי נזקים לצד ג'</div>
+                    <div class="highlight-item"><strong>תיאומים עם עיריית חיפה:</strong> קבלת היתרים ואישורים דרושים</div>
+                    <div class="highlight-item"><strong>איכות ברזל:</strong> ממפעל ישראלי תקני ומוכר</div>
+                    <div class="highlight-item"><strong>אחריות מוגברת:</strong> ברזל 25 שנה, איטום 7 שנים, אלומיניום 5 שנים</div>
+                    <div class="highlight-item"><strong>תוספות:</strong> 2 גופי תאורה + גלוון תקני + צבע אבקה בתנור, העתקת מזגנים כולל כבלים/צנרת עד 2 מטר</div>
+                    <div class="highlight-item"><strong>משך ביצוע:</strong> 6-7 חודשים, עד להתקנת המרפסת האחרונה</div>
+                </div>
+            </div>
+
+            <!-- Building Supervisor Section -->
+            <div class="section" style="background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);">
+                <div class="section-title">מפקח בניה</div>
+                <div style="background: white; padding: 20px; border-radius: 8px; border-right: 4px solid #d4a574;">
+                    <p style="font-size: 14px; color: #2c3e50; line-height: 1.8; margin-bottom: 16px;">
+                        <strong>מפקח בניה צמוד</strong> — שכר טרחה יקבע לפי מספר המשתתפים בפרויקט
+                    </p>
+                    <div class="highlights" style="gap: 10px;">
+                        <div class="highlight-item" style="padding: 10px; font-size: 13px;">ביקורים במהלך הפרויקט: מעל 30 ביקורים</div>
+                        <div class="highlight-item" style="padding: 10px; font-size: 13px;">ליווי ופיקוח על התקנת כל מרפסת</div>
+                        <div class="highlight-item" style="padding: 10px; font-size: 13px;">ליווי עבודות איטום והצפת מרפסות</div>
+                        <div class="highlight-item" style="padding: 10px; font-size: 13px;">דו"ח ליקויים לכל דירה בתום שנת הבדק</div>
+                        <div class="highlight-item" style="padding: 10px; font-size: 13px;">השגחה על ביצוע תיקונים על ידי הקבלן</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Warning Section -->
+            <div class="warning-section">
+                <h3>⚠️ אזהרה</h3>
+                <p style="text-align: right; line-height: 1.8;">
+                    קיימת תלונה מסודרת אשר הוגשה למחלקת הפיקוח על הבנייה בעיריית חיפה בעקבות ביצוע מרפסות ללא היתר תחילת עבודות, לא לפי תוכנית קונסטרוקציה וללא תיאום עם בעלי הדירות האחרים. העירייה התבקשה להשגיח ולהפגין מעורבות וזמינות במקרה של הגעת מנופים וכלים נוספים לשטח הבניין במטרה להקפיד על כיום הוראות החוק והבטיחות.
+                </p>
+            </div>
+
+            <!-- Response Form Section -->
+            <div class="section" style="background: linear-gradient(135deg, #f0f8f4 0%, #e8f5f0 100%);">
+                <div class="section-title">📋 טופס הנתונים</div>
+                <p style="font-size: 14px; color: #2c3e50; margin-bottom: 20px; line-height: 1.6;">
+                    <strong>⏰ תאריך אחרון להשבה: 24 במאי 2026</strong><br>
+                    אנא מלאו את הטופס שלהלן כדי להודיע האם אתם מעוניינים בהשתתפות בפרויקט המרפסות.
+                </p>
+                
+                <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #d4a574;">
+                    <form id="marpreset-form" style="display: grid; gap: 16px;">
+                        
+                        <!-- Choice Section -->
+                        <div style="background: #f9f9f9; padding: 16px; border-radius: 6px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 12px; color: #1a472a; font-size: 15px;">
+                                👤 האם אתם מעוניינים בהשתתפות בפרויקט?
+                            </label>
+                            <div style="display: flex; gap: 12px;">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px;">
+                                    <input type="radio" name="choice" value="מעוניין" required style="width: 18px; height: 18px; cursor: pointer;">
+                                    <span>✓ כן, אני מעוניין</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px;">
+                                    <input type="radio" name="choice" value="לא מעוניין" required style="width: 18px; height: 18px; cursor: pointer;">
+                                    <span>✗ לא, אני לא מעוניין</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Name Input -->
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #1a472a; font-size: 14px;">
+                                📝 שם מלא <span style="color: #c1272d;">*</span>
+                            </label>
+                            <input type="text" name="fullname" placeholder="הכניסו את שמכם המלא" required 
+                                   style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit;">
+                        </div>
+
+                        <!-- Phone Input -->
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #1a472a; font-size: 14px;">
+                                📞 מספר טלפון <span style="color: #c1272d;">*</span>
+                            </label>
+                            <input type="tel" name="phone" placeholder="050-1234567" required 
+                                   style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; font-family: inherit;">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" style="background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 100%); color: white; padding: 14px; border: none; border-radius: 6px; font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(26, 71, 42, 0.2);">
+                            📤 שלח תגובה
+                        </button>
+
+                        <!-- Success Message -->
+                        <div id="success-message" style="display: none; background: #d4edda; color: #155724; padding: 12px; border-radius: 6px; text-align: center; font-size: 14px; font-weight: 600;">
+                            ✓ התגובה שלכם התקבלה בהצלחה! תודה רבה.
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="error-message" style="display: none; background: #f8d7da; color: #721c24; padding: 12px; border-radius: 6px; text-align: center; font-size: 14px; font-weight: 600;">
+                            ⚠️ אירעה שגיאה בשליחה. אנא נסו שוב.
+                        </div>
+                    </form>
+
+                    <p style="font-size: 12px; color: #666; margin-top: 16px; text-align: center;">
+                        המידע שלכם יישמר בצורה מאובטחת ויוסר אל מנהל הפרויקט בלבד.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="section">
+                <div class="section-title">השלבים הבאים</div>
+                <div class="next-steps">
+                    <div class="step">מלאו את טופס הנתונים לפני 24 במאי 2026</div>
+                    <div class="step"><strong>אסיפת הבהרות:</strong> יום 21 במאי 2026, שעה 20:00 בלובי הבניין — הסברים על ההסכם, דרכי תשלום והנושא של השיקים</div>
+                    <div class="step"><strong>חתימת הסכם:</strong> תחילת החתמת בעלי דירות על הסכם הזמנת עבודות ביום 28 במאי 2026</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            עדכון רשמי מ-16 במאי 2026
+        </div>
+    </div>
+</body>
+</html>
